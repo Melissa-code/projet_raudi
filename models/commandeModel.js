@@ -8,12 +8,6 @@ const Commande = sequelize.define('commande', {
         allowNull: false,
         primaryKey: true
     },
-    id_user: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        allowNull: false,
-        primaryKey: true
-    },
     description_commande: {
         type: Sequelize.TEXT,
         allowNull: false

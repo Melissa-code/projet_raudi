@@ -1,7 +1,7 @@
 const sequelize = require('../database/database')
 const Sequelize = require('sequelize')
 const Commande = require('./commandeModel')
-const Modele = require('./modeleModel')
+
 
 const Modele = sequelize.define('modele', {
     id: {
