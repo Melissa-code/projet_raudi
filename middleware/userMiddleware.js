@@ -16,8 +16,13 @@ exports.authenticator_admin = (req, res, next) =>{
             // décoder => next()
             else{
                 console.log(decoded);
-                const result = await db.query('SELECT role FROM utilisateur where email= ?',[decoded.email])
-                if(result.length === 1 && result[0].role === "null"){
+
+
+                const [result, field] = await db.query('SELECT role FROM users WHERE email = :email', {
+                    replacements: {email}
+                });
+
+                if(result.length === 1 && result[0].role === ""){
                     next()
                 }
                 else{

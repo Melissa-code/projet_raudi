@@ -39,8 +39,10 @@ exports.authenticator_admin = (req, res, next) =>{
             // décoder => next()
             else{
                 console.log(decoded);
-                const result = await db.query('SELECT role FROM utilisateur where email= ?',[decoded.email])
-                if(result.length === 1 && result[0].role === "adminsitrateur"){
+                const [result, field] = await db.query('SELECT role FROM users WHERE email = :email', {
+                    replacements: {email}
+                });
+                if(result.length === 1 && result[0].role === "admin"){
                     next()
                 }
                 else{
@@ -69,8 +71,10 @@ exports.isComptable = async(req, res, next) =>{
         return res.status(401).json({erreur: "accès refusé : aucun email"})
     }
 
-    const sql = "SELECT * FROM utilisateur WHERE email = ?";
-    const result = await db.query(sql, [email]);
+    const [result, field] = await db.query('SELECT role FROM users WHERE email = :email', {
+        replacements: {email}
+    });
+
     const db_role = result[0].role
 
     if (db_role === "comptable"){
