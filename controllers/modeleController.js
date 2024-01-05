@@ -136,3 +136,4 @@ exports.deleteModele = async function (req, res) {
         res.status(500).json({ error: "Une erreur est survenue lors de la suppression du modèle." });
     }
 }
+
