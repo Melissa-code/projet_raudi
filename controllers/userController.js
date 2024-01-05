@@ -12,6 +12,10 @@ require('dotenv').config();
  * @param {*} res 
  * @returns 
  */
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//Inscription utilisateurs
 exports.register = async function (req, res) {
     try {
         const today = new Date();
@@ -59,3 +63,4 @@ exports.register = async function (req, res) {
         res.status(500).json({ error: `Une erreur est survenue lors de la création du compte utilisateur.` });
     }
 };
+
