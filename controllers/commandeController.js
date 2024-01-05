@@ -1,5 +1,8 @@
 const db = require('../database/database.js'); 
 const path = require('path');
+const jwt = require('jsonwebtoken');
+const { Console } = require('console');
+require('dotenv').config(); 
 
 /**
  * Ajouter un nouveau modele
@@ -11,6 +14,7 @@ const path = require('path');
 
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 //Affiche toutes les commande
 exports.getAllCommandes = async function (req, res) {
     try {
@@ -26,7 +30,7 @@ exports.getAllCommandes = async function (req, res) {
     }
 }
 
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Affiche une commande selectionner avec l'id
 exports.getCommande = async function (req, res) {
     try {
@@ -52,22 +56,35 @@ exports.getCommande = async function (req, res) {
 //Ajoute une commande
 exports.addCommande = async function (req, res) {
     try {
-        const { id_user, id_modele, date_commande, date_livraison, prix_total } = req.body;
+        const { description_commande, nom_commande, date_commande, prix_commande, } = req.body;
         const today = new Date();
+        const token = req.headers.token;
 
-        const sql = `
+        // récuperer email dans le token
+        const decoded = jwt.decode(token, process.env.SECRET_KEY)
+        const email = decoded.email
+
+        var sql = 'SELECT * FROM users WHERE email = :email';
+        const [result, field] = await db.query(sql, {
+            replacements: {
+                email
+            }
+        });
+        const id_user = result[0].id
+
+        sql = `
         INSERT INTO commandes 
-        (id_user, id_modele, date_commande, date_livraison, prix_total, createdAt, updatedAt) 
+        (userId, description_commande, nom_commande, date_commande, prix_commande, createdAt, updatedAt) 
         VALUES 
-        (:id_user, :id_modele, :date_commande, :date_livraison, :prix_total, :createdAt, :updatedAt)
+        (:id_user, :description_commande, :date_commande, :nom_commande, :prix_commande, :createdAt, :updatedAt)
         `;
         await db.query(sql, {
             replacements: {
                 id_user,
-                id_modele,
+                description_commande,
+                nom_commande,
                 date_commande,
-                date_livraison,
-                prix_total,
+                prix_commande,
                 createdAt: today,
                 updatedAt: today
             },
