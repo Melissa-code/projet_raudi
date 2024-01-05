@@ -96,3 +96,4 @@ exports.addCommande = async function (req, res) {
         res.status(500).json({ error: "Une erreur est survenue lors de l'ajout d'une commande." });
     }
 }
+//COUCOU C4EST MOI LE CHAT 
