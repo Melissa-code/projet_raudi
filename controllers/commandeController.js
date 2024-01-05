@@ -58,7 +58,7 @@ exports.addCommande = async function (req, res) {
     try {
         const { description_commande, nom_commande, date_commande, prix_commande, } = req.body;
         const today = new Date();
-        const token = req.headers.token;
+        const token = req.headers.authorization;
 
         // récuperer email dans le token
         const decoded = jwt.decode(token, process.env.SECRET_KEY)
@@ -96,4 +96,3 @@ exports.addCommande = async function (req, res) {
         res.status(500).json({ error: "Une erreur est survenue lors de l'ajout d'une commande." });
     }
 }
-//COUCOU C4EST MOI LE CHAT 
