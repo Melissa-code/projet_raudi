@@ -17,6 +17,8 @@ app.use('/modeles', modeleRoute)
 app.use('/users', userRoute)
 app.use('/commandes', commandeRoute)
 
+app.use('/', modeleRoute)
+
 app.listen(8000, ()=> {
     console.log('serveur lancé sur le port 8000');
 })
