@@ -70,6 +70,9 @@ exports.register = async function (req, res) {
  * @param {*} res 
  * @returns 
  */
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//Login utilisateurs
 exports.login = async function (req, res) {
     try {
         const { email, mdp } = req.body; 
