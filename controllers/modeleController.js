@@ -49,17 +49,6 @@ exports.getModele = async function (req, res) {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Ajoute un modele
 exports.addModele = async function (req, res) {
@@ -127,7 +116,7 @@ exports.editModele = async function (req, res) {
 }
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//Supprime un modele 
+//Supprimer le modele en fonction de l'id
 
 exports.deleteModele = async function (req, res) {
     try {
