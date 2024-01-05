@@ -17,8 +17,7 @@ exports.getAllModele = async function (req, res) {
         const sql = `
         SELECT * FROM modeles
         `;
-
-        const result = await db.query(sql);
+        const  [result, field] = await db.query(sql);
 
         res.status(200).json(result);
     } catch (error) {
@@ -26,6 +25,40 @@ exports.getAllModele = async function (req, res) {
         res.status(500).json({ error: "Une erreur est survenue lors de la récupération des modèles." });
     }
 }
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+//Affiche un modele selectionner avec l'id
+
+exports.getModele = async function (req, res) {
+    try {
+        const id = req.params.id;
+        const sql = `
+        SELECT * FROM modeles WHERE id = :id
+        `;
+
+        const  [result, field] = await db.query(sql, {
+            replacements: {
+                id
+            }
+        });
+
+        res.status(200).json(result);
+    } catch (error) {
+        console.error("Erreur lors de la récupération des modèles:", error);
+        res.status(500).json({ error: "Une erreur est survenue lors de la récupération des modèles." });
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Ajoute un modele
