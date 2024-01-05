@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 require('dotenv').config(); 
 
-
 /**
  * Inscription utilisateur 
  * 
@@ -56,7 +55,6 @@ exports.register = async function (req, res) {
         res.status(500).json({ error: `Une erreur est survenue lors de la création du compte utilisateur.` });
     }
 };
-
 
 /**
  * Connexion utilisateur
