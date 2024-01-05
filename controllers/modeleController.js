@@ -27,6 +27,19 @@ exports.getAllModele = async function (req, res) {
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
+//Affiche la liste des modeles dans une vue HTML 
+
+exports.getAllModelesInTemplateHtml = async function (req, res) {
+    try {
+        const filePath = path.join(__dirname, '../index.html');
+        res.sendFile(filePath);
+    } catch (err) {
+        console.error('Erreur :', err);
+        res.status(500).send(`Erreur : ${err.message}`);
+    }
+}
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Affiche un modele selectionner avec l'id
 
 exports.getModele = async function (req, res) {

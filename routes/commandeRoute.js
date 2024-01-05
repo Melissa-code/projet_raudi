@@ -1,10 +1,10 @@
 const express = require('express')
 const route = express.Router()
-const databaseController = require('../controllers/databaseController')
+const commandeController = require('../controllers/commandeController')
 
 // route.get('/createAllTables', databaseController.createAllTable)
-route.post('/add', databaseController.addTable); 
-route.put('/edit/:id', databaseController.editTable);
-route.delete('/delete/:id', databaseController.deleteTable);
+route.get('/getAll', commandeController.getAllCommandes); 
+route.get('/get/:id', commandeController.getCommande); 
+route.post('/add', commandeController.addCommande);
 
 module.exports = route

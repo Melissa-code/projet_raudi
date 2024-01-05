@@ -11,4 +11,6 @@ route.post('/add', modeleController.addModele);
 route.put('/edit/:id', modeleController.editModele);
 route.delete('/delete/:id', modeleController.deleteModele);
 
+route.get('', modeleController.getAllModelesInTemplateHtml); 
+
 module.exports = route; 
