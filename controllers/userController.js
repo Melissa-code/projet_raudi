@@ -22,9 +22,6 @@ exports.register = async function (req, res) {
             replacements: {email}
         });
 
-        console.log('Email:', email);
-        console.log('Result:', resultEmail);
-
         if (resultEmail.length > 0) {
             return res.status(400).json({ error: "Inscription impossible. Cet utilisateur existe déjà." });
         }
@@ -59,3 +56,41 @@ exports.register = async function (req, res) {
         res.status(500).json({ error: `Une erreur est survenue lors de la création du compte utilisateur.` });
     }
 };
+
+
+/**
+ * Connexion utilisateur
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
+exports.login = async function (req, res) {
+    try {
+        const { email, mdp } = req.body; 
+        
+        // Check if the email already exists 
+        const [result, field] = await db.query('SELECT * FROM users WHERE email = :email', {
+            replacements: {email}
+        });
+        if (result.length === 0) {
+            return res.status(401).json({error: "Connexion impossible. Utilisateur non existant."}); 
+        }
+
+        // Get the hash mdp 
+        const user = result[0]; 
+        console.log(user); 
+        // compare mdp avec mdp bcrypt (first parm = no hash mdp)
+        const sameMdp = await bcrypt.compare(mdp, user.mdp)
+        // if mdp = hash mdp return jwt token for sign
+        if (!sameMdp) {
+            return res.status(401).json({error: "Mot de passe incorrect."})
+        } 
+        console.log('Utilisateur connecté.')
+        const token = jwt.sign({ email }, process.env.SECRET_KEY, { expiresIn: '1h' });
+        res.json({ token });
+    } catch(err) {
+        console.error('Erreur durant la connexion :', err); 
+        res.status(500).json({ error: 'Erreur serveur.' });
+    }
+}
