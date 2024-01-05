@@ -15,6 +15,7 @@ require('dotenv').config();
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+
 //Affiche toutes les commande
 exports.getAllCommandes = async function (req, res) {
     try {
@@ -30,6 +31,7 @@ exports.getAllCommandes = async function (req, res) {
     }
 }
 
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Affiche une commande selectionner avec l'id
 exports.getCommande = async function (req, res) {
@@ -74,19 +76,19 @@ exports.addCommande = async function (req, res) {
 
         sql = `
         INSERT INTO commandes 
-        (userId, description_commande, nom_commande, date_commande, prix_commande, createdAt, updatedAt) 
+        (description_commande, nom_commande, date_commande, prix_commande, createdAt, updatedAt, userId) 
         VALUES 
-        (:id_user, :description_commande, :date_commande, :nom_commande, :prix_commande, :createdAt, :updatedAt)
+        (:description_commande, :nom_commande, :date_commande, :prix_commande, :createdAt, :updatedAt, :id_user)
         `;
         await db.query(sql, {
             replacements: {
-                id_user,
                 description_commande,
                 nom_commande,
                 date_commande,
                 prix_commande,
                 createdAt: today,
-                updatedAt: today
+                updatedAt: today,
+                id_user,
             },
         });
 

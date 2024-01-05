@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des modèles de voitures</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Liste des modèles de voitures</h1>
+
+    <table id="modele-table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Image</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="modele-body">
+            <!-- Affiche la liste des modèles  -->
+        </tbody>
+    </table>
+
+    <script>
+        // Fonction pour récupérer les données depuis l'API et construire le tableau
+        async function afficherModeles() {
+            try {
+                const response = await fetch('http://localhost:8000/modeles/getAll');
+                const data = await response.json();
+                const tbody = document.getElementById('modele-body');
+
+                // Ajouter chaque modèle au tableau
+                data.forEach(modele => {
+                    const row = tbody.insertRow(-1);
+                    const cellNom = row.insertCell(0);
+                    const cellPrix = row.insertCell(1);
+                    const cellImage = row.insertCell(2);
+                    const cellAction = row.insertCell(3);
+                    const button = document.createElement('button');
+                    cellAction.appendChild(button);
+
+                    cellNom.textContent = modele.nom_modele;
+                    cellPrix.textContent = modele.prix_modele;
+                    cellImage.textContent = modele.image_modele;  
+                    button.textContent = 'Voir le modèle'; 
+                    button.addEventListener('click', () => {
+                        console.log('Bouton cliqué pour détail du modèle :', modele.id);
+                    }); 
+                });
+            } catch (error) {
+                console.error('Erreur lors de la récupération des modèles:', error);
+                document.getElementById('modele-body').innerHTML = '<tr><td colspan="3">Une erreur est survenue lors de la récupération des modèles.</td></tr>';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', afficherModeles);
+    </script>
+</body>
+</html>
