@@ -2,6 +2,7 @@ const express =  require('express')
 const cors =  require('cors')
 const databaseRoute = require('./routes/databaseRoutes')
 const modeleRoute = require('./routes/modeleRoute')
+const userRoute = require('./routes/userRoute')
 
 const sequelize = require('./database/database')
 
@@ -12,6 +13,7 @@ app.use(cors())
 
 app.use('/database', databaseRoute)
 app.use('/modeles', modeleRoute)
+app.use('/users', userRoute)
 
 
 app.listen(8000, ()=> {
