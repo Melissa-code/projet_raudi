@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="" type="image/x-icon">
     <title>Liste des modèles de voitures</title>
     <style>
         body {
@@ -56,16 +57,21 @@
                     const cellNom = row.insertCell(0);
                     const cellPrix = row.insertCell(1);
                     const cellImage = row.insertCell(2);
+                    const imageModele = document.createElement('img');
+                    cellImage.appendChild(imageModele);
                     const cellAction = row.insertCell(3);
                     const button = document.createElement('button');
                     cellAction.appendChild(button);
 
                     cellNom.textContent = modele.nom_modele;
                     cellPrix.textContent = modele.prix_modele;
-                    cellImage.textContent = modele.image_modele;  
+                    //cellImage.textContent = modele.image_modele;  
+                    imageModele.src = modele.image_modele;
+                    imageModele.style.width = '100px'; 
                     button.textContent = 'Voir le modèle'; 
                     button.addEventListener('click', () => {
                         console.log('Bouton cliqué pour détail du modèle :', modele.id);
+                        window.location.href = 'http://localhost:8000/detail_modele/'+modele.id;
                     }); 
                 });
             } catch (error) {

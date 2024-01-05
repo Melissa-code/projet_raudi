@@ -31,7 +31,8 @@ exports.getAllModele = async function (req, res) {
 
 exports.getAllModelesInTemplateHtml = async function (req, res) {
     try {
-        const filePath = path.join(__dirname, '../index.html');
+        //const filePath = path.join(__dirname, '../index.html');
+        const filePath = path.join(__dirname, '../views/index.html');
         res.sendFile(filePath);
     } catch (err) {
         console.error('Erreur :', err);
@@ -59,6 +60,20 @@ exports.getModele = async function (req, res) {
     } catch (error) {
         console.error("Erreur lors de la récupération des modèles:", error);
         res.status(500).json({ error: "Une erreur est survenue lors de la récupération des modèles." });
+    }
+}
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+//Affiche le détail d'un modele dans une vue HTML 
+
+exports.getOneModeleInTemplateHtml = async function (req, res) {
+    try {
+        const id = req.params.id;
+        const filePath = path.join(__dirname, '../views/profile_modele.html/' + id);
+        res.sendFile(filePath);
+    } catch (err) {
+        console.error('Erreur :', err);
+        res.status(500).send(`Erreur : ${err.message}`);
     }
 }
 

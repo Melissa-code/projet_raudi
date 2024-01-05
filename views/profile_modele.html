@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Détails du modèle</title>
+</head>
+<body>
+
+  <h1>Détails du modèle</h1>
+
+  <div id="detailsContainer">
+    <!-- Les détails du modèle -->
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Récupérer l'ID du modèle depuis l'URL (vous devez définir comment vous obtenez cet ID)
+      const currentUrl = window.location.href;
+
+      // Créer un objet URL à partir de l'URL actuelle
+      const url = new URL(currentUrl);
+
+      // Récupérer le paramètre "id" de l'URL
+      const modeleId = url.searchParams.get('id');
+    
+      console.log(modeleId)
+
+      // Faire la requête pour récupérer les détails du modèle
+      fetch(`http://localhost:8000/get/${modeleId}`)
+        .then(response => response.json())
+        .then(modele => {
+          const detailsContainer = document.getElementById('detailsContainer');
+
+          if (modele) {
+            const ul = document.createElement('ul');
+            ul.innerHTML = `
+              <li>ID: ${modele.id}</li>
+              <li>Nom: ${nom_modele}</li>
+              <li>Description: ${description_modele}</li>
+              <!-- Ajoutez d'autres détails ici -->
+            `;
+            detailsContainer.appendChild(ul);
+          } else {
+            detailsContainer.innerHTML = '<p>Aucun modèle trouvé.</p>';
+          }
+        })
+        .catch(error => {
+          console.error('Erreur lors de la récupération des détails du modèle:', error);
+          const detailsContainer = document.getElementById('detailsContainer');
+          detailsContainer.innerHTML = '<p>Une erreur est survenue lors de la récupération des détails du modèle.</p>';
+        });
+    });
+  </script>
+
+</body>
+</html>
+
