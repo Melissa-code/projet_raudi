@@ -11,6 +11,10 @@ require('dotenv').config();
  * @param {*} res 
  * @returns 
  */
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//Inscription utilisateurs
 exports.register = async function (req, res) {
     try {
         const today = new Date();
@@ -20,6 +24,9 @@ exports.register = async function (req, res) {
         const [resultEmail, field] = await db.query('SELECT * FROM users WHERE email = :email', {
             replacements: {email}
         });
+
+        console.log('Email:', email);
+        console.log('Result:', resultEmail);
 
         if (resultEmail.length > 0) {
             return res.status(400).json({ error: "Inscription impossible. Cet utilisateur existe déjà." });
