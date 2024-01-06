@@ -27,7 +27,17 @@
 </head>
 
 <body>
-    <h1>Liste des modèles de voitures</h1>
+    <nav class="navbar">
+        <div class="left-section">
+            <span>Liste des modèles de voitures</span>
+        </div>
+        <div class="right-section">
+            <a href="http://localhost:8000/users/se_connecter" ><button class="btn" >Connexion</button></a>
+            <button class="btn">Inscription</button>
+        </div>
+    </nav>
+
+    <!--Créer moi une barre de navigation avec un bouton pour aller sur la page d'accueil, un bouton pour aller sur la page de connexion et un bouton pour aller sur la page d'inscription -->
 
     <table id="modele-table">
         <thead>
@@ -61,8 +71,22 @@
                     cellImage.appendChild(imageModele);
                     const cellAction = row.insertCell(3);
                     const button = document.createElement('button');
+                    const buttonModify = document.createElement('button');
+                    const buttonDelete = document.createElement('button');
                     cellAction.appendChild(button);
 
+                    //Voit le bouton modifier et supprimer que si l'utilisateur et connecter en tant qu'admin si il est comptable il ne peut que voir les modèles 
+                    //if (sessionStorage.getItem('role') == 'admin') {
+                    //    cellAction.appendChild(buttonModify);
+                    //    cellAction.appendChild(buttonDelete);
+                    //}
+                    //else if (sessionStorage.getItem('role') == 'comptable') {
+                    //    cellAction.appendChild(button);
+                    //}
+                    //else {
+                    //    cellAction.appendChild(button);
+                    //}
+                    
                     cellNom.textContent = modele.nom_modele;
                     cellPrix.textContent = modele.prix_modele;
                     //cellImage.textContent = modele.image_modele;  
@@ -70,6 +94,17 @@
                     imageModele.style.width = '100px'; 
                     button.textContent = 'Voir le modèle'; 
                     button.addEventListener('click', () => {
+                        console.log('Bouton cliqué pour détail du modèle :', modele.id);
+                        window.location.href = 'http://localhost:8000/detail_modele/'+modele.id;
+                    });
+                    
+                    buttonModify.textContent = 'Modifier le modele'; 
+                    buttonModify.addEventListener('click', () => {
+                        console.log('Bouton cliqué pour détail du modèle :', modele.id);
+                        window.location.href = 'http://localhost:8000/detail_modele/'+modele.id;
+                    });
+                    buttonDelete.textContent = 'Supprimer le modele'; 
+                    buttonDelete.addEventListener('click', () => {
                         console.log('Bouton cliqué pour détail du modèle :', modele.id);
                         window.location.href = 'http://localhost:8000/detail_modele/'+modele.id;
                     }); 

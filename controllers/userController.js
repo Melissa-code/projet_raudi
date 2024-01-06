@@ -12,7 +12,6 @@ require('dotenv').config();
  * @returns 
  */
 
-
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Inscription utilisateurs
 exports.register = async function (req, res) {
@@ -102,3 +101,16 @@ exports.login = async function (req, res) {
         res.status(500).json({ error: 'Erreur serveur.' });
     }
 }
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//user connexion
+
+exports.connexionTemplateHtml = async function (req, res) {
+    try {
+        const filePath = path.join(__dirname, '../views/connexion.html');
+        res.sendFile(filePath);
+    } catch (err) {
+        console.error('Erreur :', err);
+        res.status(500).send(`Erreur : ${err.message}`);
+    }
+}
+
