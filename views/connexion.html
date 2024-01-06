@@ -45,7 +45,8 @@
                 
                 // Successful login
                 console.log('Authorization:', data.token);
-            
+                localStorage.setItem("token", data.token)
+
                 // Rediriger vers la page index.html après 2 secondes
                 setTimeout(() => {
                     window.location.href = 'http://localhost:8000/';
