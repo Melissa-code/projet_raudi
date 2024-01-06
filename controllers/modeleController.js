@@ -69,7 +69,7 @@ exports.getModele = async function (req, res) {
 exports.getOneModeleInTemplateHtml = async function (req, res) {
     try {
         const id = req.params.id;
-        const filePath = path.join(__dirname, '../views/profile_modele.html/' + id);
+        const filePath = path.join(__dirname, '../views/profile_modele.html');
         res.sendFile(filePath);
     } catch (err) {
         console.error('Erreur :', err);

@@ -12,6 +12,7 @@ route.post('/add',  middleware.authenticator, middleware.authenticator_admin, mo
 route.put('/edit/:id',  middleware.authenticator,middleware.authenticator_admin, modeleController.editModele);
 route.delete('/delete/:id', middleware.authenticator,middleware.authenticator_admin, modeleController.deleteModele);
 
-route.get('', modeleController.getAllModelesInTemplateHtml); 
+route.get('/', modeleController.getAllModelesInTemplateHtml); 
+route.get('/:id', modeleController.getOneModeleInTemplateHtml); 
 
 module.exports = route; 

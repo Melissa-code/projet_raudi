@@ -1,46 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="" type="image/x-icon">
   <title>Détails du modèle</title>
 </head>
 <body>
-
   <h1>Détails du modèle</h1>
 
-  <div id="detailsContainer">
-    <!-- Les détails du modèle -->
-  </div>
+  <!-- Détails du modèle -->
+  <div id="detailsContainer"></div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // Récupérer l'ID du modèle depuis l'URL (vous devez définir comment vous obtenez cet ID)
       const currentUrl = window.location.href;
+      console.log(currentUrl)
 
       // Créer un objet URL à partir de l'URL actuelle
       const url = new URL(currentUrl);
+      console.log(url.pathname)
 
       // Récupérer le paramètre "id" de l'URL
-      const modeleId = url.searchParams.get('id');
+     // const modeleId = currentUrl.searchParams.get('id');
     
-      console.log(modeleId)
+      console.log(`http://localhost:8000/modeles/get${url.pathname}`)
 
       // Faire la requête pour récupérer les détails du modèle
-      fetch(`http://localhost:8000/get/${modeleId}`)
+      //fetch(`http://localhost:8000/modeles/get/${modeleId}`)
+      
+      fetch(`http://localhost:8000/modeles/get${url.pathname}`)
         .then(response => response.json())
-        .then(modele => {
+        .then(modeles => {
           const detailsContainer = document.getElementById('detailsContainer');
+          console.log(modeles)
 
-          if (modele) {
-            const ul = document.createElement('ul');
-            ul.innerHTML = `
-              <li>ID: ${modele.id}</li>
-              <li>Nom: ${nom_modele}</li>
-              <li>Description: ${description_modele}</li>
-              <!-- Ajoutez d'autres détails ici -->
-            `;
-            detailsContainer.appendChild(ul);
+          if (modeles) {
+            //console.log('model exists')
+            for (let i = 0; i < modeles.length; i++) {
+              console.log(modeles[i])
+              const ul = document.createElement('ul');
+              ul.innerHTML = `
+                <li><img src=${modeles[i].image_modele} style=width:100px;></li>
+                <li>ID: ${modeles[i].id}</li>
+                <li>Nom: ${modeles[i].nom_modele}</li>
+                <li>Description: ${modeles[i].description_modele}</li>
+              `;
+              detailsContainer.appendChild(ul);
+            }
+
           } else {
             detailsContainer.innerHTML = '<p>Aucun modèle trouvé.</p>';
           }

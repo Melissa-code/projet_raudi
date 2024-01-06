@@ -71,7 +71,7 @@
                     button.textContent = 'Voir le modèle'; 
                     button.addEventListener('click', () => {
                         console.log('Bouton cliqué pour détail du modèle :', modele.id);
-                        window.location.href = 'http://localhost:8000/detail_modele/'+modele.id;
+                        window.location.href = 'http://localhost:8000/'+modele.id;
                     }); 
                 });
             } catch (error) {
