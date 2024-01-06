@@ -114,3 +114,15 @@ exports.connexionTemplateHtml = async function (req, res) {
     }
 }
 
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//user inscription
+exports.inscriptionTemplateHtml = async function (req, res) {
+    try {
+        const filePath = path.join(__dirname, '../views/inscription.html');
+        res.sendFile(filePath);
+    } catch (err) {
+        console.error('Erreur :', err);
+        res.status(500).send(`Erreur : ${err.message}`);
+    }
+}
+
