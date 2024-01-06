@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="" type="image/x-icon">
+    <title>Historique des commandes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="left-section">
+            <span>Historique des commandes</span>
+        </div>
+        <div class="right-section">
+            <a href="http://localhost:8000/users/se_connecter" ><button class="btn" >Connexion</button></a>
+            <button class="btn">Inscription</button>
+        </div>
+    </nav>
+
+    <table id="modele-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Prix</th>
+                <th>ID Client</th>
+            </tr>
+        </thead>
+        <tbody id="commande-body"><!-- Affiche la liste des commandes  --></tbody>
+    </table>
+
+    <script>
+        // Récupére les données depuis l'API et construit le tableau
+        async function afficherCommandes() {
+            try {
+                const response = await fetch('http://localhost:8000/commandes/getAll', {
+                    headers: {Authorization: localStorage.getItem('token')}
+                });
+                const data = await response.json();
+                const tbody = document.getElementById('commande-body');
+              
+
+                // Ajoute chaque commande au tableau
+                data.forEach(commande => {
+                    const dateCommande = new Date(commande.date_commande);
+                    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+                    const dateFormatee = dateCommande.toLocaleDateString('en-US', options);
+
+                    const row = tbody.insertRow(-1);
+                    const cellId = row.insertCell(0);
+                    const cellNom = row.insertCell(1);
+                    const cellDescription = row.insertCell(2);
+                    const cellDate = row.insertCell(3);
+                    const cellPrix = row.insertCell(4);
+                    const cellIdClient = row.insertCell(5);
+                    
+                    cellId.textContent = commande.id;
+                    cellNom.textContent = commande.nom_commande;
+                    cellDescription.textContent = commande.description_commande;
+                    cellDate.textContent = dateFormatee;
+                    cellPrix.textContent = `${commande.prix_commande} €`;
+                    cellIdClient.textContent = commande.userId;
+                });
+            } catch (error) {
+                console.error('Erreur lors de la récupération des commandes:', error);
+                document.getElementById('modele-body').innerHTML = '<tr><td colspan="3">Une erreur est survenue lors de la récupération des commandes.</td></tr>';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', afficherCommandes);
+    </script>
+</body>
+</html>

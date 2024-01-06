@@ -4,17 +4,8 @@ const jwt = require('jsonwebtoken');
 const { Console } = require('console');
 require('dotenv').config(); 
 
-/**
- * Ajouter un nouveau modele
- * 
- * @param {*} req 
- * @param {*} res 
- * @returns 
- */
-
-
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//Affiche toutes les commande
+//Affiche toutes les commandes
 exports.getAllCommandes = async function (req, res) {
     try {
         const sql = `
@@ -29,8 +20,20 @@ exports.getAllCommandes = async function (req, res) {
     }
 }
 
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+//Affiche la liste des commandes dans une vue HTML 
+exports.getAllCommandesInTemplateHtml = async function (req, res) {
+    try {
+        const filePath = path.join(__dirname, '../views/commandes.html');
+        res.sendFile(filePath);
+    } catch (err) {
+        console.error('Erreur :', err);
+        res.status(500).send(`Erreur : ${err.message}`);
+    }
+}
+
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//Affiche une commande selectionner avec l'id
+//Affiche une commande selectionnée avec l'id
 exports.getCommande = async function (req, res) {
     try {
         const id = req.params.id;

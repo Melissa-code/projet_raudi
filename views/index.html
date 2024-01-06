@@ -33,8 +33,7 @@
         </div>
         <div class="right-section">
             <a href="http://localhost:8000/users/se_connecter" ><button class="btn" >Connexion</button></a>
-            <a href="http://localhost:8000/users/inscription" ><button class="btn" >Inscription</button></a>
-
+            <button class="btn">Inscription</button>
         </div>
     </nav>
 
@@ -55,6 +54,10 @@
     </table>
 
     <script>
+        const token = localStorage.getItem("token")
+        const navCommandes = document.getElementById('nav-commandes')
+        navCommandes.href = "http://localhost:8000/commandes/commandes?token=" + token; 
+
         // Fonction pour récupérer les données depuis l'API et construire le tableau
         async function afficherModeles() {
             try {
