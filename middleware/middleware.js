@@ -41,7 +41,8 @@ exports.authenticator_admin = (req, res, next) =>{
             }
             // décoder => next()
             else{
-                console.log(decoded);
+                const decoded = jwt.decode(token, process.env.SECRET_KEY)
+                const email = decoded.email
                 const [result, field] = await db.query('SELECT role FROM users WHERE email = :email', {
                     replacements: {email}
                 });
