@@ -7,8 +7,8 @@ require('dotenv').config()
 //Vérification si l'utilisateur est connecté
 exports.authenticator = (req, res, next) =>{
     // récupérer le token
-    //const token = req.params.token ? req.params.token : req.headers.authorization
-    const token = req.params.token ? req.params.token : req.query.token ? req.query.token : req.headers.authorization
+    const token = req.params.token ? req.params.token : req.headers.authorization
+    //const token = req.params.token ? req.params.token : req.query.token ? req.query.token : req.headers.authorization
     console.log(req.query);
   
     if(token && process.env.SECRET_KEY){
@@ -32,7 +32,8 @@ exports.authenticator = (req, res, next) =>{
 //Vérification si l'utilisateur est connecté + admin 
 exports.authenticator_admin = (req, res, next) =>{
     // récupérer le token
-    const token = req.headers.authorization
+    //const token = req.headers.authorization
+    const token = req.params.token ? req.params.token : req.query.token ? req.query.token : req.headers.authorization
     if(token && process.env.SECRET_KEY){
         jwt.verify(token, process.env.SECRET_KEY, async (err, decoded)=>{
             // si problème => erreur

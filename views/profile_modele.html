@@ -53,9 +53,15 @@
 
     <script>
       document.addEventListener('DOMContentLoaded', () => {
+        const token = localStorage.getItem("token")
+        const navCommandes = document.getElementById('nav-commandes')
+        navCommandes.href = "http://localhost:8000/commandes/commandes?token=" + token; 
+    
+        const navTotalCommandes = document.getElementById('nav-totalCommandes');
+        navTotalCommandes.href = "http://localhost:8000/commandes/totalPrixCommandes?token=" + token;
+        
         // Récupére l'ID du modèle depuis l'URL 
         const currentUrl = window.location.href;
-        //console.log(currentUrl)
 
         // Crée un objet URL à partir de l'URL actuelle
         const url = new URL(currentUrl);

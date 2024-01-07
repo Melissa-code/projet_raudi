@@ -160,14 +160,16 @@ exports.deleteModele = async function (req, res) {
 //Ajoute une option dans table modeleoptions
 exports.addOptionModele = async function (req, res) {
     try {
-        const { optionId, modeleId } = req.body;
+        const modeleId = parseInt(req.params.id);
+        console.log(modeleId)
+        const { optionId } = req.body;
         const today = new Date();
 
         const sql = `
         INSERT INTO modeleoptions 
         (optionId, modeleId, createdAt, updatedAt) 
         VALUES 
-        (:optionId, :modeleId :createdAt, :updatedAt)
+        (:optionId, :modeleId, :createdAt, :updatedAt)
         `;
 
         const result = await db.query(sql, {
