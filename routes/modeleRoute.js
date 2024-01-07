@@ -3,9 +3,6 @@ const route = express.Router();
 const modeleController = require('../controllers/modeleController'); 
 const middleware = require('../middleware/middleware')
 
-/**
- * Route pour ajouter un nouveau modèle
- */
 route.get('/getAll', modeleController.getAllModele);
 route.get('/get/:id', modeleController.getModele);
 route.post('/add',  middleware.authenticator, middleware.authenticator_admin, modeleController.addModele); 

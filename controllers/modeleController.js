@@ -1,15 +1,6 @@
 const db = require('../database/database.js'); 
 const path = require('path');
 
-/**
- * Ajouter un nouveau modele
- * 
- * @param {*} req 
- * @param {*} res 
- * @returns 
- */
-
-
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Affiche tous les modeles 
 exports.getAllModele = async function (req, res) {
@@ -165,3 +156,32 @@ exports.deleteModele = async function (req, res) {
     }
 }
 
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//Ajoute une option dans table modeleoptions
+exports.addOptionModele = async function (req, res) {
+    try {
+        const { optionId, modeleId } = req.body;
+        const today = new Date();
+
+        const sql = `
+        INSERT INTO modeleoptions 
+        (optionId, modeleId, createdAt, updatedAt) 
+        VALUES 
+        (:optionId, :modeleId :createdAt, :updatedAt)
+        `;
+
+        const result = await db.query(sql, {
+            replacements: {
+                optionId, 
+                modeleId,
+                createdAt: today,
+                updatedAt: today
+            }
+        });
+
+        res.status(200).json({ message: "Option ajoutée avec succès.", insertedId: result.insertId });
+    } catch (error) {
+        console.error("Erreur lors de l'ajout de l'option:", error);
+        res.status(500).json({ error: "Une erreur est survenue lors de l'ajout de l'option." });
+    }
+}

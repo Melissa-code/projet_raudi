@@ -1,66 +1,98 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="" type="image/x-icon">
-  <title>Détails du modèle</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>Liste des modèles</title>
 </head>
+
 <body>
-  <h1>Détails du modèle</h1>
+    <header class="p-3 text-bg-dark">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="http://localhost:8000" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none me-5" style="font-size:35px; ">RAUDI</a>
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="http://localhost:8000" class="nav-link px-2 text-light">Accueil</a></li>
+                    <li><a href="#" class="nav-link px-2 text-light">Customiser un modèle</a></li>
+                    <li><a href="http://localhost:8000/commandes/commandes?token=token" class="nav-link px-2 text-light" id="nav-commandes">Historique des commandes</a></li>
+                    <li><a href="http://localhost:8000/commandes/totalPrixCommandes?token=token" class="nav-link px-2 text-light" id="nav-totalCommandes">Gain total des commandes</a></li>
+                </ul>
+                <div class="text-end">
+                    <button type="button" class="btn btn-outline-light me-2">
+                        <a href="http://localhost:8000/users/se_connecter" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                            Connexion
+                        </a>
+                    </button>
+                    <button type="button" class="btn btn-warning">
+                        <a href="" class="d-flex align-items-center mb-2 mb-lg-0 text-black text-decoration-none">
+                            Inscription
+                        </a>
+                    </button>
+                </div>
+            </div>
+            </div>
+    </header>
 
-  <!-- Détails du modèle -->
-  <div id="detailsContainer"></div>
+    <main>
+        <div class="container my-5">
+              <section class="title mb-4">
+                  <h1 class="text-center">Détails du modèle</h1>
+              </section>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Récupérer l'ID du modèle depuis l'URL (vous devez définir comment vous obtenez cet ID)
-      const currentUrl = window.location.href;
-      console.log(currentUrl)
+              <!-- Affiche les détails du modèle -->
+              <section >
+                <div class="row d-flex justify-content-center ">
+                  <div class="col-md-6" id="detailsContainer">
+                  </div>
+                </div>
+              </section>
+        </div>
+    </main>
 
-      // Créer un objet URL à partir de l'URL actuelle
-      const url = new URL(currentUrl);
-      console.log(url.pathname)
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // Récupére l'ID du modèle depuis l'URL 
+        const currentUrl = window.location.href;
+        //console.log(currentUrl)
 
-      // Récupérer le paramètre "id" de l'URL
-     // const modeleId = currentUrl.searchParams.get('id');
-    
-      console.log(`http://localhost:8000/modeles/get${url.pathname}`)
+        // Crée un objet URL à partir de l'URL actuelle
+        const url = new URL(currentUrl);
 
-      // Faire la requête pour récupérer les détails du modèle
-      //fetch(`http://localhost:8000/modeles/get/${modeleId}`)
-      
-      fetch(`http://localhost:8000/modeles/get${url.pathname}`)
-        .then(response => response.json())
-        .then(modeles => {
-          const detailsContainer = document.getElementById('detailsContainer');
-          console.log(modeles)
+        fetch(`http://localhost:8000/modeles/get${url.pathname}`)
+          .then(response => response.json())
+          .then(modeles => {
+            const detailsContainer = document.getElementById('detailsContainer');
 
-          if (modeles) {
-            //console.log('model exists')
-            for (let i = 0; i < modeles.length; i++) {
-              console.log(modeles[i])
-              const ul = document.createElement('ul');
-              ul.innerHTML = `
-                <li><img src=${modeles[i].image_modele} style=width:100px;></li>
-                <li>ID: ${modeles[i].id}</li>
-                <li>Nom: ${modeles[i].nom_modele}</li>
-                <li>Description: ${modeles[i].description_modele}</li>
-              `;
-              detailsContainer.appendChild(ul);
+            if (modeles) {
+              for (let i = 0; i < modeles.length; i++) {
+                //console.log(modeles[i])
+                const ul = document.createElement('ul');
+                ul.classList.add('list-group');
+                ul.innerHTML = `
+                  <li class="list-group-item d-flex justify-content-center "><img src=${modeles[i].image_modele} style=width:250px;></li>
+                  <li class="list-group-item d-flex justify-content-center ">Nom: ${modeles[i].nom_modele}</li>
+                  <li class="list-group-item d-flex justify-content-center ">Description: ${modeles[i].description_modele}</li>
+                  <li class="list-group-item d-flex justify-content-center ">Prix: ${modeles[i].prix_modele} €</li>
+                  <li class="list-group-item d-flex justify-content-center ">Nombre de places: ${modeles[i].nb_places_modele}</li>
+                  <li class="list-group-item d-flex justify-content-center ">Type de moteur: ${modeles[i].type_moteur_modele}</li>
+                `;
+
+                detailsContainer.appendChild(ul);
+              }
+
+            } else {
+              detailsContainer.innerHTML = '<p>Aucun modèle trouvé.</p>';
             }
-
-          } else {
-            detailsContainer.innerHTML = '<p>Aucun modèle trouvé.</p>';
-          }
-        })
-        .catch(error => {
-          console.error('Erreur lors de la récupération des détails du modèle:', error);
-          const detailsContainer = document.getElementById('detailsContainer');
-          detailsContainer.innerHTML = '<p>Une erreur est survenue lors de la récupération des détails du modèle.</p>';
-        });
-    });
-  </script>
+          })
+          .catch(error => {
+            console.error('Erreur lors de la récupération des détails du modèle:', error);
+            const detailsContainer = document.getElementById('detailsContainer');
+            detailsContainer.innerHTML = '<p>Une erreur est survenue lors de la récupération des détails du modèle.</p>';
+          });
+      });
+    </script>
 
 </body>
 </html>

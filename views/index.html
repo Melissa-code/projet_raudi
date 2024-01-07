@@ -4,61 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="" type="image/x-icon">
-    <title>Liste des modèles de voitures</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>Liste des modèles</title>
 </head>
 
 <body>
-    <nav class="navbar">
-        <div class="left-section">
-            <span>Liste des modèles de voitures</span>
-        </div>
-        <div class="right-section">
-            <a href="http://localhost:8000/users/se_connecter" ><button class="btn" >Connexion</button></a>
-            <button class="btn">Inscription</button>
-            <a href="http://localhost:8000/commandes/commandes?token=token" id="nav-commandes">commandes</a>
-        </div>
-    </nav>
+    <header class="p-3 text-bg-dark">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="http://localhost:8000" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none me-5" style="font-size:35px; ">RAUDI</a>
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="http://localhost:8000" class="nav-link px-2 text-light">Accueil</a></li>
+                    <li><a href="#" class="nav-link px-2 text-light">Customiser un modèle</a></li>
+                    <li><a href="http://localhost:8000/commandes/commandes?token=token" class="nav-link px-2 text-light" id="nav-commandes">Historique des commandes</a></li>
+                    <li><a href="http://localhost:8000/commandes/totalPrixCommandes?token=token" class="nav-link px-2 text-light" id="nav-totalCommandes">Gain total des commandes</a></li>
+                </ul>
+                <div class="text-end">
+                    <button type="button" class="btn btn-outline-light me-2">
+                        <a href="http://localhost:8000/users/se_connecter" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                            Connexion
+                        </a>
+                    </button>
+                    <button type="button" class="btn btn-warning">
+                        <a href="" class="d-flex align-items-center mb-2 mb-lg-0 text-black text-decoration-none">
+                            Inscription
+                        </a>
+                    </button>
+                </div>
+            </div>
+            </div>
+    </header>
 
-    <!--Créer moi une barre de navigation avec un bouton pour aller sur la page d'accueil, un bouton pour aller sur la page de connexion et un bouton pour aller sur la page d'inscription -->
+    <main>
+        <div class="container my-5">
+            <section class="title mb-4">
+                <h1 class="text-center">Liste des modèles</h1>
+            </section>
 
-    <table id="modele-table">
-        <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Prix</th>
-                <th>Image</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody id="modele-body">
-            <!-- Affiche la liste des modèles  -->
-        </tbody>
-    </table>
+            <section class="modele">
+                <table id="modele-table" class="table border table-bordered">
+                    <thead>
+                        <tr class="table-secondary">
+                            <th scope="col">Nom</th>
+                            <th scope="col">Prix</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="modele-body"><!-- les commandes --></tbody>
+                </table>
+            </section>
+        </div>
+    </main>
 
     <script>
         const token = localStorage.getItem("token")
         const navCommandes = document.getElementById('nav-commandes')
         navCommandes.href = "http://localhost:8000/commandes/commandes?token=" + token; 
-
+    
+        const navTotalCommandes = document.getElementById('nav-totalCommandes');
+        navTotalCommandes.href = "http://localhost:8000/commandes/totalPrixCommandes?token=" + token;
+        
         // Fonction pour récupérer les données depuis l'API et construire le tableau
         async function afficherModeles() {
             try {
@@ -98,6 +104,7 @@
                     imageModele.src = modele.image_modele;
                     imageModele.style.width = '100px'; 
                     button.textContent = 'Voir le modèle'; 
+                    button.classList.add('btn', 'btn-dark');
                     button.addEventListener('click', () => {
                         console.log('Bouton cliqué pour détail du modèle :', modele.id);
                         window.location.href = 'http://localhost:8000/'+modele.id;

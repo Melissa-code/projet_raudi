@@ -9,7 +9,9 @@ require('dotenv').config();
 exports.getAllCommandes = async function (req, res) {
     try {
         const sql = `
-        SELECT * FROM commandes
+        SELECT c.*, u.nom FROM commandes AS c
+        LEFT JOIN users AS u
+        ON c.userId = u.id
         `;
         const  [result, field] = await db.query(sql);
 
@@ -31,6 +33,40 @@ exports.getAllCommandesInTemplateHtml = async function (req, res) {
         res.status(500).send(`Erreur : ${err.message}`);
     }
 }
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//Calcule la somme des prix des commandes du même mois
+exports.getTotalPricesByMonth = async function (req, res) {
+    try {
+        const sql = `
+            SELECT 
+                DATE_FORMAT(date_commande, '%Y-%m') AS mois,
+                COUNT(*) AS nombreCommandes,
+                SUM(prix_commande) AS sommePrix
+            FROM commandes
+            GROUP BY mois
+        `;
+        const [result, fields] = await db.query(sql);
+
+        res.status(200).json(result);
+    } catch (error) {
+        console.error("Erreur lors de la récupération des commandes :", error);
+        res.status(500).json({ error: "Une erreur est survenue lors de la récupération des commandes." });
+    }
+};
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//Affiche la somme des prix des commandes du même mois dans une vue HTML
+exports.getTotalPriceCommandesInTemplateHtml = async function (req, res) {
+    try {
+        const filePath = path.join(__dirname, '../views/totalCommandes.html');
+        res.sendFile(filePath);
+    } catch (err) {
+        console.error('Erreur :', err);
+        res.status(500).send(`Erreur : ${err.message}`);
+    }
+}
+
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Affiche une commande selectionnée avec l'id

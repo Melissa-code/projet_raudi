@@ -65,7 +65,6 @@ exports.isComptable = async(req, res, next) =>{
     //const token = req.query.token || req.headers.authorization;
     const token = req.params.token ? req.params.token : req.query.token ? req.query.token : req.headers.authorization
     
-
     if (!token){
         return res.status(401).json({erreur: "accès refusé : aucun token"})
     }

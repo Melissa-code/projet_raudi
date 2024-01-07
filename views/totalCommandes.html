@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <title>Historique des commandes</title>
+    <title>Gain total par mois des commandes</title>
 </head>
 
 <body>
@@ -38,65 +38,56 @@
     <main>
         <div class="container my-5">
             <section class="title mb-4">
-                <h1 class="text-center">Historique des commandes</h1>
+                <h1 class="text-center">Gain total des commandes</h1>
             </section>
 
-            <section class="commandes">
-                <table id="commande-table" class="table border table-bordered">
+            <section class="total-commandes">
+                <table id="commandesTotal-table" class="table border table-bordered">
                     <thead>
                         <tr class="table-secondary">
-                            <th scope="col">ID</th>
-                            <th scope="col">Nom</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Prix</th>
-                            <th scope="col">Nom du Client</th>
+                            <th scope="col">Mois</th>
+                            <th scope="col">Nombre de commandes</th>
+                            <th scope="col">Total</th>
                         </tr>
                     </thead>
-                    <tbody id="commande-body"><!-- Affiche toutes les commandes --></tbody>
+                    <tbody id="totalCommande-body"><!-- Affiche le gain total des commandes par mois --></tbody>
                 </table>
             </section>
         </div>
     </main>
 
     <script>
-        // Récupére les données depuis l'API et construit le tableau
-        async function afficherCommandes() {
-            try {
-                const token = localStorage.getItem("token")
-                const navCommandes = document.getElementById('nav-commandes')
-                navCommandes.href = "http://localhost:8000/commandes/commandes?token=" + token; 
-                const navTotalCommandes = document.getElementById('nav-totalCommandes');
-                navTotalCommandes.href = "http://localhost:8000/commandes/totalPrixCommandes?token=" + token;
+        // Récupère le token pour le mettre dans l'url du lien
+        const token = localStorage.getItem("token")
+        const navCommandes = document.getElementById('nav-commandes')
+        navCommandes.href = "http://localhost:8000/commandes/commandes?token=" + token; 
+        const navTotalCommandes = document.getElementById('nav-totalCommandes');
+        navTotalCommandes.href = "http://localhost:8000/commandes/totalPrixCommandes?token=" + token;
 
-                const response = await fetch('http://localhost:8000/commandes/getAll', {
+        // Récupére les données depuis l'API et construit le tableau
+        async function afficherTotalPrixCommandes() {
+            try {
+                const response = await fetch('http://localhost:8000/commandes/getTotalPrices', {
                     headers: {Authorization: localStorage.getItem('token')}
                 });
                 const data = await response.json();
-                const tbody = document.getElementById('commande-body');
+                const tbody = document.getElementById('totalCommande-body');
               
-
                 // Ajoute chaque commande au tableau
                 data.forEach(commande => {
-                    console.log(commande)
-                    const dateCommande = new Date(commande.date_commande);
-                    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-                    const dateFormatee = dateCommande.toLocaleDateString('fr-FR', options);
+                    const dateStr = commande.mois;
+                    const date = new Date(dateStr);
+                    const mois = date.toLocaleString('fr-FR', { month: 'long' }); // 'long' pour obtenir le nom complet du mois
+                    const annee = date.getFullYear();
 
                     const row = tbody.insertRow(-1);
-                    const cellId = row.insertCell(0);
-                    const cellNom = row.insertCell(1);
-                    const cellDescription = row.insertCell(2);
-                    const cellDate = row.insertCell(3);
-                    const cellPrix = row.insertCell(4);
-                    const cellIdClient = row.insertCell(5);
+                    const cellMois = row.insertCell(0);
+                    const cellNbCommandes = row.insertCell(1);
+                    const cellTotal = row.insertCell(2);
                     
-                    cellId.textContent = commande.id;
-                    cellNom.textContent = commande.nom_commande;
-                    cellDescription.textContent = commande.description_commande;
-                    cellDate.textContent = dateFormatee;
-                    cellPrix.textContent = `${commande.prix_commande} €`;
-                    cellIdClient.textContent = commande.nom
+                    cellMois.textContent = `${mois} ${annee}`;
+                    cellNbCommandes.textContent = commande.nombreCommandes;
+                    cellTotal.textContent = `${commande.sommePrix} €`;
                 });
             } catch (error) {
                 console.error('Erreur lors de la récupération des commandes:', error);
@@ -104,7 +95,9 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', afficherCommandes);
+        document.addEventListener('DOMContentLoaded', afficherTotalPrixCommandes);
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>

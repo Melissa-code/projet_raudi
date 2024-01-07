@@ -3,25 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion</title>
+    <link rel="icon" href="" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>Liste des modèles</title>
 </head>
+
 <body>
-    <h1>Connexion</h1>
+    <header class="p-3 text-bg-dark">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="http://localhost:8000" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none me-5" style="font-size:35px; ">RAUDI</a>
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="http://localhost:8000" class="nav-link px-2 text-light">Accueil</a></li>
+                    <li><a href="#" class="nav-link px-2 text-light">Customiser un modèle</a></li>
+                    <li><a href="http://localhost:8000/commandes/commandes?token=token" class="nav-link px-2 text-light" id="nav-commandes">Historique des commandes</a></li>
+                    <li><a href="http://localhost:8000/commandes/totalPrixCommandes?token=token" class="nav-link px-2 text-light" id="nav-totalCommandes">Gain total des commandes</a></li>
+                </ul>
+                <div class="text-end">
+                    <button type="button" class="btn btn-outline-light me-2">
+                        <a href="http://localhost:8000/users/se_connecter" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                            Connexion
+                        </a>
+                    </button>
+                    <button type="button" class="btn btn-warning">
+                        <a href="" class="d-flex align-items-center mb-2 mb-lg-0 text-black text-decoration-none">
+                            Inscription
+                        </a>
+                    </button>
+                </div>
+            </div>
+            </div>
+    </header>
 
-    <!-- form -->
-    <form id="loginForm">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+    <main>
+        <div class="container my-5" >
+      
+            <section class="title mb-4">
+                <h1 class="text-center">Connexion</h1>
+            </section>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-
-        <button type="button" onclick="login()">Login</button>
-    </form>
-    <!-- error msg -->
-    <div id="error-message" style="color: red;"></div>
-    <div id="success-message" style="color: green;"></div>
-
+            <section class="mt-4 mt-md-5">
+                <div class="row mt-md-5 d-flex justify-content-center">
+                    <div class="col-md-5 mt-5">
+                        <form id="loginForm" class="border rounded p-5">
+                            <div class="mb-3">
+                                <label for="email" class="form-label" >Email</label>
+                                <input type="email" id="email" name="email" required class="form-control" >
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Mot de passe</label>
+                                <input type="password" id="password" name="password" required class="form-control">
+                            </div>
+                         
+                            <button type="button" class="btn btn-secondary w-100" onclick="login()">Se connecter</button>
+                        </form>
+                            <div id="error-message" style="color: red;"></div>
+                            <div id="success-message" style="color: green;"></div>
+                    </div>
+                </div>
+            </section>
+         
+        </div>
+    </main>
+    
     <script>
         async function login() {
             const email = document.getElementById('email').value;
@@ -60,9 +104,6 @@
                     document.getElementById('error-message').innerText = '';
                 }, 5000);
             }
-            
-
-
         }
     </script>
 </body>
