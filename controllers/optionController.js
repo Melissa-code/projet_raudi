@@ -21,7 +21,7 @@ exports.getAllOptions = async function (req, res) {
 //Ajoute une option 
 exports.addOption = async function (req, res) {
     try {
-        const { optionId, modeleId } = req.body;
+        const { nom, desc } = req.body;
         const today = new Date();
 
         const sql = `
