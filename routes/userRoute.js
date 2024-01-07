@@ -5,6 +5,7 @@ const userController = require('../controllers/userController');
 route.post('/', userController.register); 
 route.post('/connexion', userController.login); 
 route.get('/se_connecter', userController.connexionTemplateHtml);
+route.post('/register', userController.register);
 route.get('/inscription', userController.inscriptionTemplateHtml);
 
 

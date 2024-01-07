@@ -35,16 +35,15 @@ exports.register = async function (req, res) {
         const hashMdp = await bcrypt.hash(mdp, 10); // 10 rounds
         const sql = `
             INSERT INTO users
-            (nom, email, mdp, role, createdAt, updatedAt) 
+            (nom, email, mdp, createdAt, updatedAt) 
             VALUES 
-            (:nom, :email, :mdp, :role, :createdAt, :updatedAt)
+            (:nom, :email, :mdp, :createdAt, :updatedAt)
         `;
         await db.query(sql, {
             replacements: {
                 nom,
                 email,
                 mdp: hashMdp,
-                role: null,
                 createdAt: today,
                 updatedAt: today
             },
@@ -114,8 +113,8 @@ exports.connexionTemplateHtml = async function (req, res) {
     }
 }
 
-//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//user inscription
+// user inscription
+// User inscription
 exports.inscriptionTemplateHtml = async function (req, res) {
     try {
         const filePath = path.join(__dirname, '../views/inscription.html');
@@ -125,4 +124,3 @@ exports.inscriptionTemplateHtml = async function (req, res) {
         res.status(500).send(`Erreur : ${err.message}`);
     }
 }
-
