@@ -38,7 +38,7 @@
     <main>
         <div class="container my-5" >
             <section class="title mb-4">
-                <h1 class="text-center">Inscription</h1>
+                <h1 class="text-center">Ajout d'un modele </h1>
             </section>
 
             <section class="mt-4 mt-md-5">
@@ -49,16 +49,40 @@
                                 <label for="nom" class="form-label">Nom</label>
                                 <input type="text" id="nom" name="nom" required class="form-control">
                             </div>
+                        
                             <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" id="email" name="email" required class="form-control">
+                                <label for="desc" class="form-label">Description</label>
+                                <input type="text" id="desc" name="desc" required class="form-control">
                             </div>
+                        
                             <div class="mb-3">
-                                <label for="password" class="form-label">Mot de passe</label>
-                                <input type="password" id="password" name="password" required class="form-control">
+                                <label for="prix" class="form-label">Prix</label>
+                                <input type="text" id="prix" name="prix" required class="form-control">
                             </div>
-                            <button type="button" class="btn btn-secondary w-100" onclick="register()">S'inscrire</button>
+                        
+                            <div class="mb-3">
+                                <label for="image" class="form-label">Image</label>
+                                <input type="text" id="image" name="image" required class="form-control">
+                            </div>
+                        
+                            <div class="mb-3">
+                                <label for="taille" class="form-label">Taille</label>
+                                <input type="text" id="taille" name="taille" required class="form-control">
+                            </div>
+                        
+                            <div class="mb-3">
+                                <label for="mb_places" class="form-label">Nombre de places</label>
+                                <input type="text" id="mb_places" name="mb_places" required class="form-control">
+                            </div>
+                        
+                            <div class="mb-3">
+                                <label for="type_moteur" class="form-label">Type de moteur</label>
+                                <input type="text" id="type_moteur" name="type_moteur" required class="form-control">
+                            </div>
+                        
+                            <button type="button" class="btn btn-secondary w-100" onclick="register()">Ajouter un modele</button>
                         </form>
+                        
                         <div id="error-message" style="color: red;"></div>
                         <div id="success-message" style="color: green;"></div>
                     </div>
