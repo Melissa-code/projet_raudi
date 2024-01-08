@@ -92,7 +92,13 @@ exports.login = async function (req, res) {
         if (!sameMdp) {
             return res.status(401).json({error: "Mot de passe incorrect."})
         } 
-        console.log('Utilisateur connecté.')
+
+        let role;
+        if (user.role === "admin") {
+            role = "admin"; 
+        }
+        console.log('Utilisateur connecté avec le rôle .', role)
+       
         const token = jwt.sign({ email }, process.env.SECRET_KEY, { expiresIn: '1h' });
         res.json({ token });
     } catch(err) {
