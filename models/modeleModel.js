@@ -12,7 +12,8 @@ const Modele = sequelize.define('modele', {
     },
     nom_modele: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
     description_modele: {
         type: Sequelize.TEXT,
