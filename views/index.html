@@ -53,6 +53,7 @@
 
     <script>
         const token = localStorage.getItem("token")
+        console.log("hello " + token)
         const navCommandes = document.getElementById('nav-commandes')
         navCommandes.href = "http://localhost:8000/commandes/commandes?token=" + token; 
         const navTotalCommandes = document.getElementById('nav-totalCommandes');
@@ -101,7 +102,7 @@
 
                     // Administration
                     // bouton ajouter un modele
-                    if (isAdminConnected()) {
+                    //if (isAdminConnected()) {
                         const buttonAdd = document.createElement('a');
                         //buttonAdd.href = `http://localhost:8000/`;
                         buttonAdd.classList.add('btn', 'btn-secondary','ms-5');
@@ -130,7 +131,7 @@
                         iconDelete.style.color = "#FFFFFF"; 
                         buttonDelete.appendChild(iconDelete);
                         cardBody.appendChild(buttonDelete);
-                    }
+                    //}
                     
                     card.appendChild(cardBody);
                     cardCol.appendChild(card);
@@ -143,11 +144,11 @@
         }
 
         // Vérifie que l'admin est connecté
-        function isAdminConnected() {
-            const roleUser = localStorage.getItem('role');
-            console.log(roleUser)
-            return roleUser;
-        }
+        //function isAdminConnected() {
+          //  const roleUser = localStorage.getItem('role');
+            //console.log(roleUser)
+            //return roleUser;
+        //}
 
         document.addEventListener('DOMContentLoaded', afficherModeles);
     </script>

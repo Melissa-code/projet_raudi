@@ -3,6 +3,7 @@ const route = express.Router();
 const modeleController = require('../controllers/modeleController'); 
 const middleware = require('../middleware/middleware')
 
+route.get('/addModele', modeleController.addModeleInTemplateHtml); 
 route.get('/getAll', modeleController.getAllModele);
 route.post('/:id/addOptions/', middleware.authenticator, modeleController.addOptionModele);
 route.get('/get/:id', modeleController.getModele);

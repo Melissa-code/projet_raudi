@@ -103,6 +103,20 @@ exports.addModele = async function (req, res) {
     }
 }
 
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//Affiche le détail d'un modele dans une vue HTML 
+exports.addModeleInTemplateHtml= async function (req, res) {
+    try {
+        const filePath = path.join(__dirname, '../views/ajoutModele.html');
+        res.sendFile(filePath);
+    } catch (err) {
+        console.error('Erreur :', err);
+        res.status(500).send(`Erreur : ${err.message}`);
+    }
+}
+
+
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Modifie un modele 
 exports.editModele = async function (req, res) {

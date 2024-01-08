@@ -98,7 +98,7 @@ exports.login = async function (req, res) {
             role = "admin"; 
         }
         console.log('Utilisateur connecté avec le rôle .', role)
-       
+   
         const token = jwt.sign({ email }, process.env.SECRET_KEY, { expiresIn: '1h' });
         res.json({ token });
     } catch(err) {
